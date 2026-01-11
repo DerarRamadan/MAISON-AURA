@@ -1,20 +1,30 @@
 import React, { useState } from 'react';
 import { useAuthStore } from '../../store/useAuthStore';
+import { useAdminStore } from '../../store/useAdminStore'; // Import AdminStore
 import { useNavigate } from 'react-router-dom';
-import { Lock } from 'lucide-react';
+import { Lock, User } from 'lucide-react'; // Added User icon
 
 export default function AdminLogin() {
+    const [username, setUsername] = useState<string>(''); // Changed from just password to username + password
     const [password, setPassword] = useState<string>('');
     const [error, setError] = useState<string>('');
-    const login = useAuthStore((state: any) => state.login);
+
+    const login = useAuthStore((state) => state.login);
+    const getAdminByCredentials = useAdminStore((state) => state.getAdminByCredentials);
+
     const navigate = useNavigate();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (login(password)) {
+        setError('');
+
+        const adminUser = getAdminByCredentials(username, password);
+
+        if (adminUser) {
+            login({ name: adminUser.name, role: adminUser.role });
             navigate('/admin');
         } else {
-            setError('كلمة المرور غير صحيحة');
+            setError('اسم المستخدم أو كلمة المرور غير صحيحة');
         }
     };
 
@@ -26,10 +36,25 @@ export default function AdminLogin() {
                         <Lock className="w-8 h-8" />
                     </div>
                     <h1 className="text-2xl font-serif font-bold text-black-rich">دخول المسؤول</h1>
-                    <p className="text-gray-500 text-sm mt-2">يرجى إدخال كلمة المرور للمتابعة</p>
+                    <p className="text-gray-500 text-sm mt-2">يرجى إدخال بيانات الدخول للمتابعة</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                        <label className="block text-sm font-bold text-gray-700 mb-2">اسم المستخدم أو الهاتف</label>
+                        <div className="relative">
+                            <User className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                            <input
+                                type="text"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                className="w-full pr-10 pl-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:border-gold transition-colors"
+                                placeholder="اسم المستخدم"
+                                required
+                            />
+                        </div>
+                    </div>
+
                     <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2">كلمة المرور</label>
                         <div className="relative">
@@ -57,7 +82,7 @@ export default function AdminLogin() {
                     </button>
 
                     <p className="text-xs text-center text-gray-400">
-                        استخدم كلمة المرور الافتراضية: admin123
+                        البيانات الافتراضية: admin / admin123
                     </p>
                 </form>
             </div>

@@ -44,6 +44,7 @@ export default function Footer() {
             </div>
             <div className="container mx-auto mt-16 pt-8 border-t border-white/10 text-center text-xs text-gray-500 flex flex-col md:flex-row justify-between items-center gap-4">
                 <span>{t('footer.rights')}</span>
+                <span className="text-gold/80 font-medium italic">{t('footer.graduation_project')}</span>
                 <span>{t('footer.made_in')}</span>
             </div>
         </footer>
