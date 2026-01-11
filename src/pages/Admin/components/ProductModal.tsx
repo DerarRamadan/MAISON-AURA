@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, Upload } from 'lucide-react';
+import { X, Upload, ChevronDown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import type { Product } from '../../../data/products';
 
@@ -12,12 +12,13 @@ interface ProductModalProps {
 
 export default function ProductModal({ isOpen, onClose, onSave, product }: ProductModalProps) {
     const { t } = useTranslation();
+    const [isCategoryOpen, setIsCategoryOpen] = useState(false);
     const [formData, setFormData] = useState<Omit<Product, 'id'>>({
         name: '',
         brand: '',
         price: 0,
         image: '',
-        category: 'oriental',
+        category: 'شرقية',
         description: '',
     });
 
@@ -28,7 +29,7 @@ export default function ProductModal({ isOpen, onClose, onSave, product }: Produ
                 brand: product.brand,
                 price: product.price,
                 image: product.image,
-                category: product.category || 'oriental',
+                category: product.category || 'شرقية',
                 description: product.description || '',
             });
         } else {
@@ -37,7 +38,7 @@ export default function ProductModal({ isOpen, onClose, onSave, product }: Produ
                 brand: '',
                 price: 0,
                 image: '',
-                category: 'oriental',
+                category: 'شرقية',
                 description: '',
             });
         }
@@ -60,11 +61,18 @@ export default function ProductModal({ isOpen, onClose, onSave, product }: Produ
         onClose();
     };
 
+    const categories = [
+        { value: 'زهرية', label: 'shop.categories.floral' },
+        { value: 'خشبية', label: 'shop.categories.woody' },
+        { value: 'شرقية', label: 'shop.categories.oriental' },
+        { value: 'منعشة', label: 'shop.categories.fresh' },
+    ];
+
     if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-            <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden">
+            <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl relative">
                 <div className="flex items-center justify-between p-6 border-b border-gray-100">
                     <h2 className="text-2xl font-serif font-bold text-black-rich">
                         {product ? 'تعديل منتج' : 'إضافة منتج جديد'}
@@ -111,16 +119,46 @@ export default function ProductModal({ isOpen, onClose, onSave, product }: Produ
                         </div>
                         <div>
                             <label className="block text-sm font-bold text-gray-700 mb-1">الفئة</label>
-                            <select
-                                value={formData.category}
-                                onChange={e => setFormData(prev => ({ ...prev, category: e.target.value }))}
-                                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:border-gold outline-none"
-                            >
-                                <option value="floral">{t('shop.categories.floral')}</option>
-                                <option value="woody">{t('shop.categories.woody')}</option>
-                                <option value="oriental">{t('shop.categories.oriental')}</option>
-                                <option value="fresh">{t('shop.categories.fresh')}</option>
-                            </select>
+                            <div className="relative">
+                                <button
+                                    type="button"
+                                    onClick={() => setIsCategoryOpen(!isCategoryOpen)}
+                                    className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:border-gold outline-none flex justify-between items-center bg-white text-right"
+                                >
+                                    <span className="text-gray-700">
+                                        {categories.find(c => c.value === formData.category)?.label
+                                            ? t(categories.find(c => c.value === formData.category)!.label)
+                                            : formData.category}
+                                    </span>
+                                    <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${isCategoryOpen ? 'rotate-180' : ''}`} />
+                                </button>
+
+                                {isCategoryOpen && (
+                                    <>
+                                        <div className="fixed inset-0 z-[55]" onClick={() => setIsCategoryOpen(false)} />
+                                        <div className="absolute z-[60] w-full mt-1 bg-white border border-gray-100 rounded-lg shadow-xl max-h-48 overflow-y-auto left-0">
+                                            {categories.map((cat) => (
+                                                <button
+                                                    key={cat.value}
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setFormData(prev => ({ ...prev, category: cat.value }));
+                                                        setIsCategoryOpen(false);
+                                                    }}
+                                                    className={`w-full px-4 py-3 text-right hover:bg-gray-50 transition-colors flex items-center justify-between border-b border-gray-50 last:border-0
+                                                        ${formData.category === cat.value ? 'bg-gold/5 text-gold font-bold' : 'text-gray-700'}
+                                                    `}
+                                                >
+                                                    <span className="flex-1">{t(cat.label)}</span>
+                                                    {formData.category === cat.value && (
+                                                        <div className="w-2 h-2 rounded-full bg-gold" />
+                                                    )}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
 
