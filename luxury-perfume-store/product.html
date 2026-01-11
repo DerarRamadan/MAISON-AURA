@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المنتج | ميزون أورا</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { gold: '#d4af37', 'black-rich': '#0a0a0a', cream: '#fdfbf7' },
+                    fontFamily: { serif: ['"Amiri"', 'serif'], sans: ['"Tajawal"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body class="bg-cream text-black-rich font-sans">
+
+    <nav
+        class="fixed w-full z-50 bg-cream/90 backdrop-blur px-6 py-4 flex justify-between items-center border-b border-gray-200">
+        <a href="index.html" class="text-2xl font-serif font-bold">ميزون أورا</a>
+        <a href="shop.html" class="text-sm font-bold hover:text-gold flex items-center gap-2">
+            <span>عودة للمتجر</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" class="transform rotate-180">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+        </a>
+    </nav>
+
+    <div class="pt-24 min-h-screen flex flex-col md:flex-row">
+        <!-- Gallery (Right Sticky in RTL usually, or Left depending on preference. Let's keep image start-aligned which is Right in RTL) -->
+        <div class="w-full md:w-1/2 h-[50vh] md:h-screen md:sticky md:top-0 bg-gray-100 overflow-hidden order-1">
+            <img id="p-image" src="" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Details -->
+        <div class="w-full md:w-1/2 p-8 md:p-24 flex flex-col justify-center order-2">
+            <span id="p-brand" class="text-gold uppercase tracking-widest text-sm font-bold mb-4 block">الماركة</span>
+            <h1 id="p-name" class="text-4xl md:text-5xl font-serif mb-6 leading-tight font-bold">اسم العطر</h1>
+            <p id="p-description" class="text-gray-600 leading-relaxed mb-8 text-lg font-light">الوصف هنا...</p>
+
+            <div class="mb-8">
+                <h3 class="text-sm font-bold mb-4 text-black border-b border-black/10 pb-2 inline-block">النوتات العطرية
+                </h3>
+                <div id="p-notes" class="flex flex-wrap gap-2">
+                    <!-- Notes injected -->
+                </div>
+            </div>
+
+            <div class="flex items-center gap-8 mb-12">
+                <span id="p-price" class="text-3xl font-serif text-gold font-bold">000 د.ل</span>
+                <div class="flex items-center border border-gray-300 rounded">
+                    <button id="increment-btn" class="px-4 py-2 hover:bg-gray-100 transition">+</button>
+                    <input id="qty-input" type="number" value="1" min="1"
+                        class="w-12 text-center border-none outline-none appearance-none bg-transparent font-bold">
+                    <button id="decrement-btn" class="px-4 py-2 hover:bg-gray-100 transition">-</button>
+                </div>
+            </div>
+
+            <button id="add-to-cart-btn"
+                class="w-full bg-black-rich text-white py-4 font-bold text-lg hover:bg-gold transition-colors shadow-lg">إضافة
+                للسلة</button>
+
+            <div class="mt-12 pt-8 border-t border-gray-200 space-y-4">
+                <div class="flex justify-between text-sm text-gray-500">
+                    <span>الشحن</span>
+                    <span class="font-bold text-black">شحن مجاني للطلبات فوق 500 ر.س</span>
+                </div>
+                <div class="flex justify-between text-sm text-gray-500">
+                    <span>الاسترجاع</span>
+                    <span class="font-bold text-black">استرجاع مجاني خلال 7 أيام</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/data.js"></script>
+    <script>
+        // Inline Data Backup (Robustness)
+        const fallbackProducts = [
+            { id: 1, name: "أمواج أوبوس السادس عشر", brand: "أمواج", price: 1400, image: "assets/images/prod-opus.png", description: "عطر فاخر يجمع بين نفحات التوابل الحارة مثل الفلفل الوردي وجوزة الطيب.", notes: ["فلفل وردي", "جوزة الطيب", "لبان"] },
+            { id: 2, name: "لطافة خمرا", brand: "لطافة", price: 150, image: "assets/images/prod-khamrah.png", description: "عطر شرقي دافئ يتميز برائحة القرفة والعنبر.", notes: ["قرفة", "عنبر", "خشب"] },
+            { id: 3, name: "مزيج القرشي", brand: "عبد الصمد القرشي", price: 850, image: "assets/images/prod-qurashi.png", description: "مزيج ملكي من العود الهندي والورد الطائفي.", notes: ["عود", "ورد", "مسك"] },
+            { id: 4, name: "باكارات روج 540", brand: "ميزون فرانسيس", price: 1200, image: "assets/images/prod-baccarat.png", description: "عطر أيقوني يجمع بين الياسمين والزعفران.", notes: ["ياسمين", "زعفران", "عنبر"] },
+            { id: 5, name: "لطافة يارا", brand: "لطافة", price: 120, image: "assets/images/prod-yara.png", description: "عطر أنثوي ناعم برائحة الفانيليا والأوركيد.", notes: ["فانيليا", "أوركيد", "فواكه"] },
+            { id: 6, name: "بن شيخ", brand: "أحمد المغربي", price: 350, image: "assets/images/prod-binshaikh.png", description: "عطر قوي برائحة العود والتوابل.", notes: ["عود", "زعفران", "جلد"] },
+            { id: 7, name: "مسك الخمائل", brand: "نخبة العود", price: 200, image: "assets/images/prod-musk.png", description: "مسك خالص برائحة نظيفة ومنعشة.", notes: ["مسك", "بودرة", "زهور"] },
+            { id: 8, name: "الماجد - ريتاج", brand: "الماجد", price: 180, image: "assets/images/prod-retaj.png", description: "عطر كلاسيكي بلمسة عصرية.", notes: ["حمضيات", "ورد", "خشب"] }
+        ];
+
+        const params = new URLSearchParams(window.location.search);
+        const id = parseInt(params.get('id')); // Ensure integer for comparison
+
+        // Try Global Store first, then Fallback
+        let product;
+        if (window.perfumeStore) {
+            product = window.perfumeStore.getProducts().find(p => p.id == id);
+        }
+        if (!product) {
+            product = fallbackProducts.find(p => p.id === id);
+        }
+
+        if (product) {
+            document.title = `${product.name} | ميزون أورا`;
+            document.getElementById('p-image').src = product.image;
+            document.getElementById('p-brand').innerText = product.brand;
+            document.getElementById('p-name').innerText = product.name;
+            document.getElementById('p-description').innerText = product.description || "وصف المنتج غير متوفر حالياً.";
+            document.getElementById('p-price').innerText = product.price + ' د.ل';
+
+            const notesContainer = document.getElementById('p-notes');
+            notesContainer.innerHTML = '';
+            const notes = product.notes || ["عطرية", "فواحة", "ثابتة"]; // Fallback notes
+            notes.forEach(note => {
+                const badge = document.createElement('span');
+                badge.className = "bg-gray-100 px-4 py-1 text-sm text-gray-700 rounded-full border border-gray-200";
+                badge.innerText = note;
+                notesContainer.appendChild(badge);
+            });
+
+            // === QUANTITY LOGIC ===
+            const qtyInput = document.getElementById('qty-input');
+            const incBtn = document.getElementById('increment-btn');
+            const decBtn = document.getElementById('decrement-btn');
+
+            incBtn.addEventListener('click', () => {
+                qtyInput.value = parseInt(qtyInput.value) + 1;
+            });
+
+            decBtn.addEventListener('click', () => {
+                if (parseInt(qtyInput.value) > 1) {
+                    qtyInput.value = parseInt(qtyInput.value) - 1;
+                }
+            });
+
+            // === ADD TO CART LOGIC ===
+            document.getElementById('add-to-cart-btn').addEventListener('click', () => {
+                const qty = parseInt(qtyInput.value);
+                const cartItem = { ...product, qty: qty }; // Clone and add qty
+
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.push(cartItem);
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                alert(`تم إضافة ${qty} عبوة من ${product.name} إلى السلة.`);
+            });
+
+        } else {
+            document.body.innerHTML = "<div class='h-screen flex items-center justify-center font-bold text-xl'>عذراً، المنتج غير موجود.</div>";
+        }
+    </script>
+</body>
+
+</html>

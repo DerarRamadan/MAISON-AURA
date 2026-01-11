@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | ميزون أورا</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { gold: '#d4af37', 'black-rich': '#0a0a0a', cream: '#fdfbf7' },
+                    fontFamily: { serif: ['"Amiri"', 'serif'], sans: ['"Tajawal"', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 font-sans">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar (Right) -->
+        <aside class="w-64 bg-black-rich text-white flex flex-col shrink-0 overflow-y-auto">
+            <div class="p-6 text-2xl font-serif text-center border-b border-gray-800 font-bold">ميزون أدمن</div>
+            <nav class="flex-1 p-6 space-y-4">
+                <a href="#" class="block text-gold font-bold bg-white/10 p-3 rounded">المنتجات</a>
+                <a href="#" class="block text-gray-400 hover:text-white p-3 transition">الطلبات (تجريبي)</a>
+                <a href="#" class="block text-gray-400 hover:text-white p-3 transition">العملاء (تجريبي)</a>
+            </nav>
+            <div class="p-6 border-t border-gray-800">
+                <a href="index.html" class="text-sm text-gray-500 hover:text-white flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    عودة للموقع
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content (Left) -->
+        <main class="flex-1 overflow-y-auto p-8 md:p-12">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-3xl font-serif font-bold text-black-rich">إدارة المنتجات</h1>
+                <button onclick="toggleModal()"
+                    class="bg-gold text-white px-6 py-3 rounded shadow hover:bg-yellow-600 transition font-bold">+ إضافة
+                    منتج جديد</button>
+            </div>
+
+            <!-- Product Table -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                <table class="w-full text-right border-collapse">
+                    <thead class="bg-gray-50 border-b border-gray-200">
+                        <tr>
+                            <th class="p-4 font-bold text-gray-600">ID</th>
+                            <th class="p-4 font-bold text-gray-600">الصورة</th>
+                            <th class="p-4 font-bold text-gray-600">الاسم</th>
+                            <th class="p-4 font-bold text-gray-600">السعر</th>
+                            <th class="p-4 font-bold text-gray-600">التصنيف</th>
+                            <th class="p-4 font-bold text-gray-600">إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-table-body" class="divide-y divide-gray-100">
+                        <!-- Rows injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div id="modal" class="fixed inset-0 bg-black/50 hidden flex items-center justify-center z-50 backdrop-blur-sm">
+        <div class="bg-white p-8 rounded-lg shadow-xl w-full max-w-lg border-t-4 border-gold">
+            <h2 class="text-2xl font-serif font-bold mb-6">إضافة عطر جديد</h2>
+            <form id="add-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-bold mb-1">اسم العطر</label>
+                    <input type="text" id="name"
+                        class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-gold" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-1">الماركة</label>
+                    <input type="text" id="brand"
+                        class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-gold" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-1">السعر (ر.س)</label>
+                    <input type="number" id="price"
+                        class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-gold" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-1">رابط الصورة</label>
+                    <input type="url" id="image"
+                        class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-gold"
+                        placeholder="https://..." required>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-1">الوصف</label>
+                    <textarea id="description"
+                        class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:border-gold"
+                        rows="3"></textarea>
+                </div>
+                <div class="flex justify-end gap-4 mt-8">
+                    <button type="button" onclick="toggleModal()"
+                        class="text-gray-500 hover:text-black font-bold">إلغاء</button>
+                    <button type="submit"
+                        class="bg-black-rich text-white px-8 py-2 rounded hover:bg-gold transition font-bold">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="assets/js/data.js"></script>
+    <script>
+        const tableBody = document.getElementById('product-table-body');
+
+        function renderTable() {
+            const products = window.perfumeStore.getProducts();
+            tableBody.innerHTML = '';
+            products.forEach(p => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-gray-50 transition";
+                tr.innerHTML = `
+                    <td class="p-4 text-gray-400 font-mono text-sm">#${p.id.toString().slice(-4)}</td>
+                    <td class="p-4"><img src="${p.image}" class="w-12 h-12 object-cover rounded-md border border-gray-200"></td>
+                    <td class="p-4 font-bold text-gray-800">${p.name}</td>
+                    <td class="p-4 text-gold font-bold">${p.price} ر.س</td>
+                    <td class="p-4"><span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-bold">${p.category}</span></td>
+                    <td class="p-4">
+                        <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:text-red-700 text-xs font-bold border border-red-200 hover:bg-red-50 px-3 py-1 rounded transition">حذف</button>
+                    </td>
+                `;
+                tableBody.appendChild(tr);
+            });
+        }
+
+        function toggleModal() {
+            document.getElementById('modal').classList.toggle('hidden');
+        }
+
+        function deleteProduct(id) {
+            if (confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+                window.perfumeStore.deleteProduct(id);
+                renderTable();
+            }
+        }
+
+        document.getElementById('add-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newProduct = {
+                name: document.getElementById('name').value,
+                brand: document.getElementById('brand').value,
+                price: parseFloat(document.getElementById('price').value),
+                image: document.getElementById('image').value,
+                description: document.getElementById('description').value,
+                category: "مخصص",
+                notes: ["مكون 1", "مكون 2"],
+                isBestSeller: false,
+                isNew: true
+            };
+            window.perfumeStore.addProduct(newProduct);
+            toggleModal();
+            renderTable();
+            e.target.reset();
+        });
+
+        // Init
+        renderTable();
+    </script>
+</body>
+
+</html>
