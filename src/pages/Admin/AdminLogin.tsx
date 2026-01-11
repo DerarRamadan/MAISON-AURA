@@ -21,7 +21,13 @@ export default function AdminLogin() {
         const adminUser = getAdminByCredentials(username, password);
 
         if (adminUser) {
-            login({ name: adminUser.name, role: adminUser.role });
+            login({
+                id: adminUser.id,
+                name: adminUser.name,
+                username: adminUser.username,
+                role: adminUser.role,
+                phone: adminUser.phone
+            });
             navigate('/admin');
         } else {
             setError('اسم المستخدم أو كلمة المرور غير صحيحة');

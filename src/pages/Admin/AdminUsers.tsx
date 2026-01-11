@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Search, UserPlus, Edit2, Trash2, X, Phone, User, Lock, Shield } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useAdminStore, type AdminUser } from '../../store/useAdminStore';
+import { useAuthStore } from '../../store/useAuthStore';
 
 export default function AdminUsers() {
     const { t } = useTranslation();
     const { admins, addAdmin, updateAdmin, removeAdmin } = useAdminStore();
+    const { user: currentUser, updateUser } = useAuthStore();
 
     const [searchTerm, setSearchTerm] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,6 +58,22 @@ export default function AdminUsers() {
 
         if (editingUser) {
             updateAdmin(editingUser.id, formData);
+            // If the edited user is the one currently logged in, update the session
+            // We check both ID and name/username for better reliability with existing sessions
+            const isCurrentUser = currentUser && (
+                currentUser.id === editingUser.id ||
+                (!currentUser.id && currentUser.username === editingUser.username) ||
+                (!currentUser.id && !currentUser.username && currentUser.name === editingUser.name)
+            );
+
+            if (isCurrentUser) {
+                updateUser({
+                    id: editingUser.id, // Set the ID now if it was missing
+                    name: formData.name,
+                    role: formData.role,
+                    phone: formData.phone
+                });
+            }
         } else {
             addAdmin(formData);
         }

@@ -1,12 +1,14 @@
-import { Menu, Globe, User } from 'lucide-react';
+import { Menu, Globe, User as UserIcon, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useAuthStore } from '../../../store/useAuthStore';
 
 interface AdminHeaderProps {
     onMenuClick: () => void;
 }
 
 export default function AdminHeader({ onMenuClick }: AdminHeaderProps) {
-    const { t, i18n } = useTranslation();
+    const { i18n } = useTranslation();
+    const user = useAuthStore((state) => state.user);
 
     const toggleLanguage = () => {
         i18n.changeLanguage(i18n.language === 'ar' ? 'en' : 'ar');
@@ -40,11 +42,22 @@ export default function AdminHeader({ onMenuClick }: AdminHeaderProps) {
 
                 <div className="flex items-center gap-3">
                     <div className="hidden sm:flex flex-col items-end">
-                        <span className="text-sm font-bold text-black-rich">Admin User</span>
-                        <span className="text-xs text-gray-500">admin@maisonaura.com</span>
+                        <span className="text-sm font-bold text-black-rich">{user?.name}</span>
+                        {user?.phone && (
+                            <div className="flex items-center gap-1 text-gray-500">
+                                <Phone className="w-3 h-3 text-gold" />
+                                <span className="text-xs font-mono" dir="ltr">{user.phone}</span>
+                            </div>
+                        )}
                     </div>
-                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center border border-gray-200">
-                        <User className="w-5 h-5 text-gray-600" />
+                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center border border-gray-200 overflow-hidden">
+                        {user?.name ? (
+                            <div className="w-full h-full bg-black-rich text-white flex items-center justify-center font-bold text-sm uppercase">
+                                {user.name.substring(0, 2)}
+                            </div>
+                        ) : (
+                            <UserIcon className="w-5 h-5 text-gray-600" />
+                        )}
                     </div>
                 </div>
             </div>
