@@ -5,12 +5,19 @@ import Footer from './Footer';
 import CartSidebar from '../cart/CartSidebar';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-    const { pathname } = useLocation();
+    const { pathname, hash } = useLocation();
 
-    // Scroll to top on route change
+    // Scroll to top on route change or to hash section
     useEffect(() => {
+        if (hash) {
+            const element = document.querySelector(hash);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+        }
         window.scrollTo(0, 0);
-    }, [pathname]);
+    }, [pathname, hash]);
 
     return (
         <div className="min-h-screen flex flex-col font-sans text-black-rich bg-cream selection:bg-gold selection:text-white">

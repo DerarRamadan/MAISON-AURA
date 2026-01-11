@@ -99,7 +99,7 @@ export default function CheckoutPage() {
 
             <div className="flex flex-col lg:flex-row gap-12">
                 {/* Form */}
-                <div className="flex-1 order-2 lg:order-1">
+                <div className="flex-1">
                     <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
                         <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
                             <Truck className="text-gold" />
@@ -149,7 +149,7 @@ export default function CheckoutPage() {
                 </div>
 
                 {/* Summary */}
-                <div className="w-full lg:w-96 order-1 lg:order-2 h-fit sticky top-24">
+                <div className="w-full lg:w-96 h-fit lg:sticky lg:top-24">
                     <div className="bg-gray-50 p-6 rounded-lg">
                         <h3 className="font-serif font-bold text-xl mb-6">{t('checkout.order_summary')}</h3>
                         <div className="space-y-4 max-h-80 overflow-y-auto mb-6 pr-2 custom-scrollbar">

@@ -18,7 +18,7 @@ export default function CategoryGrid() {
     ];
 
     return (
-        <section className="py-32 bg-black-rich text-cream relative">
+        <section className="py-32 bg-black-rich text-cream relative" id="collections">
             <div className="text-center mb-16 relative z-10">
                 <h2 className="text-4xl font-serif mb-4 text-gold">{t('home_sections.category_grid.title')}</h2>
                 <p className="text-white/60 text-lg">{t('home_sections.category_grid.subtitle')}</p>

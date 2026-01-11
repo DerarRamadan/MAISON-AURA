@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { NavLink, useLocation } from 'react-router-dom';
 import { ShoppingBag, Menu, X, Search, Globe } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
@@ -22,16 +23,17 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Update document direction based on language
-    useEffect(() => {
-        const dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
-        document.dir = dir;
-        document.documentElement.dir = dir;
-        document.documentElement.lang = i18n.language;
-    }, [i18n.language]);
+
 
     const toggleLanguage = () => {
         i18n.changeLanguage(i18n.language === 'ar' ? 'en' : 'ar');
+    };
+
+    // Helper to check if a link is truly active (handling hashes)
+    const isLinkActive = (path: string) => {
+        if (path === '/') return location.pathname === '/' && location.hash === '';
+        if (path.startsWith('/#')) return location.pathname === '/' && location.hash === path.substring(1);
+        return location.pathname === path;
     };
 
     const links = [
@@ -69,15 +71,18 @@ export default function Navbar() {
                     <NavLink
                         key={link.path}
                         to={link.path}
-                        className={({ isActive }) => cn(
+                        className={() => cn(
                             "hover:text-gold transition-colors relative group",
-                            (isActive && link.path !== '/')
+                            isLinkActive(link.path)
                                 ? "text-gold"
                                 : ((scrolled || mobileMenuOpen) ? "text-black-rich" : "text-white")
                         )}
                     >
                         {link.name}
-                        <span className="absolute -bottom-1 right-0 w-0 h-0.5 bg-gold transition-all group-hover:w-full" />
+                        <span className={cn(
+                            "absolute -bottom-1 right-0 h-0.5 bg-gold transition-all duration-300",
+                            isLinkActive(link.path) ? "w-full" : "w-0 group-hover:w-full"
+                        )} />
                     </NavLink>
                 ))}
             </div>
@@ -109,39 +114,95 @@ export default function Navbar() {
                     )}
                 </button>
 
-                {/* Mobile Menu Button */}
                 <button
-                    className="md:hidden hover:text-gold"
-                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                    className="md:hidden hover:text-gold p-1"
+                    onClick={() => setMobileMenuOpen(true)}
                 >
-                    {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                    <Menu className="w-6 h-6" />
                 </button>
             </div>
 
-            {/* Mobile Menu */}
-            <AnimatePresence>
-                {mobileMenuOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="absolute top-full left-0 w-full bg-cream border-b border-gray-100 overflow-hidden md:hidden shadow-lg"
-                    >
-                        <div className="flex flex-col p-6 space-y-4 text-center">
-                            {links.map(link => (
-                                <NavLink
-                                    key={link.path}
-                                    to={link.path}
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="text-lg font-bold hover:text-gold transition-colors text-black-rich" // Force text color in mobile menu content
-                                >
-                                    {link.name}
-                                </NavLink>
-                            ))}
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {/* Mobile Menu Drawer */}
+            {createPortal(
+                <AnimatePresence>
+                    {mobileMenuOpen && (
+                        <>
+                            {/* Overlay */}
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                onClick={() => setMobileMenuOpen(false)}
+                                className="fixed inset-0 bg-black/60 z-[9998] md:hidden backdrop-blur-sm"
+                            />
+
+                            {/* Drawer */}
+                            <motion.div
+                                initial={{ x: i18n.language === 'ar' ? '100%' : '-100%' }}
+                                animate={{ x: 0 }}
+                                exit={{ x: i18n.language === 'ar' ? '100%' : '-100%' }}
+                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                className={cn(
+                                    "fixed top-0 bottom-0 z-[9999] w-full max-w-[320px] bg-cream shadow-2xl md:hidden overflow-hidden flex flex-col",
+                                    i18n.language === 'ar' ? "right-0" : "left-0"
+                                )}
+                            >
+                                {/* Drawer Header */}
+                                <div className="flex items-center justify-between p-6 border-b border-gray-100">
+                                    <span className="text-xl font-serif font-bold text-black-rich">MAISON AURA</span>
+                                    <button
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="p-2 hover:bg-gray-100 rounded-full transition-colors text-black-rich"
+                                    >
+                                        <X className="w-6 h-6" />
+                                    </button>
+                                </div>
+
+                                {/* Drawer Content */}
+                                <div className="flex flex-col p-8 space-y-6 overflow-y-auto">
+                                    {links.map(link => {
+                                        const active = isLinkActive(link.path);
+                                        return (
+                                            <NavLink
+                                                key={link.path}
+                                                to={link.path}
+                                                onClick={() => setMobileMenuOpen(false)}
+                                                className={cn(
+                                                    "text-2xl font-serif font-bold transition-colors flex items-center justify-between group",
+                                                    active ? "text-gold" : "text-black-rich hover:text-gold"
+                                                )}
+                                            >
+                                                {link.name}
+                                                <span className={cn(
+                                                    "w-2 h-2 rounded-full bg-gold opacity-0 transition-opacity",
+                                                    active && "opacity-100"
+                                                )} />
+                                            </NavLink>
+                                        );
+                                    })}
+
+                                    <div className="h-px bg-gray-100 w-full my-4" />
+
+                                    {/* Mobile Actions */}
+                                    <div className="space-y-4">
+                                        <button
+                                            onClick={() => {
+                                                toggleLanguage();
+                                                setMobileMenuOpen(false);
+                                            }}
+                                            className="flex items-center gap-3 text-lg font-sans font-bold text-black-rich hover:text-gold transition-colors"
+                                        >
+                                            <Globe className="w-5 h-5" />
+                                            <span>{i18n.language === 'ar' ? 'English' : 'العربية'}</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </>
+                    )}
+                </AnimatePresence>
+                , document.body
+            )}
         </nav>
     );
 }
