@@ -22,7 +22,7 @@ export default function ShopFilters({
     const { t } = useTranslation();
 
     return (
-        <aside className="w-full md:w-64 ps-8 mb-8 md:mb-0 sticky top-24 h-fit">
+        <aside className="w-full md:w-64 ps-8 mb-8 md:mb-0 md:sticky md:top-24 h-fit">
             <h2 className="text-xl font-serif mb-6 font-bold">{t('shop.filters.title')}</h2>
 
             <div className="mb-8">
