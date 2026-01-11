@@ -120,14 +120,14 @@
     <script>
         // ===== PRODUCT DATA (INLINE FALLBACK) =====
         const shopProducts = [
-            { id: 1, name: "أمواج أوبوس السادس عشر", brand: "أمواج", price: 1400, image: "assets/images/prod-opus.png" },
-            { id: 2, name: "لطافة خمرا", brand: "لطافة", price: 150, image: "assets/images/prod-khamrah.png" },
-            { id: 3, name: "مزيج القرشي", brand: "عبد الصمد القرشي", price: 850, image: "assets/images/prod-qurashi.png" },
-            { id: 4, name: "باكارات روج 540", brand: "ميزون فرانسيس", price: 1200, image: "assets/images/prod-baccarat.png" },
-            { id: 5, name: "لطافة يارا", brand: "لطافة", price: 120, image: "assets/images/prod-yara.png" },
-            { id: 6, name: "بن شيخ", brand: "أحمد المغربي", price: 350, image: "assets/images/prod-binshaikh.png" },
-            { id: 7, name: "مسك الخمائل", brand: "نخبة العود", price: 200, image: "assets/images/prod-musk.png" },
-            { id: 8, name: "الماجد - ريتاج", brand: "الماجد", price: 180, image: "assets/images/prod-retaj.png" }
+            { id: 1, name: "أمواج أوبوس السادس عشر", brand: "أمواج", price: 1400, image: "assets/images/prod-opus.webp" },
+            { id: 2, name: "لطافة خمرا", brand: "لطافة", price: 150, image: "assets/images/prod-khamrah.webp" },
+            { id: 3, name: "مزيج القرشي", brand: "عبد الصمد القرشي", price: 850, image: "assets/images/prod-qurashi.webp" },
+            { id: 4, name: "باكارات روج 540", brand: "ميزون فرانسيس", price: 1200, image: "assets/images/prod-baccarat.webp" },
+            { id: 5, name: "لطافة يارا", brand: "لطافة", price: 120, image: "assets/images/prod-yara.webp" },
+            { id: 6, name: "بن شيخ", brand: "أحمد المغربي", price: 350, image: "assets/images/prod-binshaikh.webp" },
+            { id: 7, name: "مسك الخمائل", brand: "نخبة العود", price: 200, image: "assets/images/prod-musk.webp" },
+            { id: 8, name: "الماجد - ريتاج", brand: "الماجد", price: 180, image: "assets/images/prod-retaj.webp" }
         ];
 
         // ===== CART SYSTEM =====
@@ -151,7 +151,7 @@
                     total += item.price;
                     html += `
                         <div class="flex items-center gap-4 mb-4 pb-4 border-b border-gray-100">
-                            <img src="${item.image}" class="w-16 h-16 object-cover rounded" onerror="this.src='assets/images/prod-opus.png'">
+                            <img src="${item.image}" class="w-16 h-16 object-cover rounded" onerror="this.src='assets/images/prod-opus.webp'">
                             <div class="flex-1">
                                 <h4 class="font-bold text-sm">${item.name}</h4>
                                 <p class="text-gold text-sm">${item.price} د.ل</p>
@@ -209,7 +209,7 @@
 
                 div.innerHTML = `
                     <div class="aspect-[3/4] overflow-hidden bg-gray-50 mb-4 relative">
-                        <img src="${p.image}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.src='assets/images/prod-opus.png'">
+                        <img src="${p.image}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" onerror="this.src='assets/images/prod-opus.webp'">
                         <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                             <button onclick="event.stopPropagation(); addToCart({id:${p.id}, name:'${p.name}', price:${p.price}, image:'${p.image}'})" class="bg-gold text-white px-4 py-2 font-bold text-sm hover:bg-black transition-colors">أضف للسلة</button>
                         </div>

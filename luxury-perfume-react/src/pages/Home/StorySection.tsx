@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import storyBg from '../../assets/images/story-bg.png';
+import storyBg from '../../assets/images/story-bg.webp';
 import { useTranslation } from 'react-i18next';
 
 export default function StorySection() {

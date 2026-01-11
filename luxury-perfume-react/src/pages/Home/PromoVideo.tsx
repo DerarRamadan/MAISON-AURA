@@ -1,5 +1,5 @@
 import { Play } from 'lucide-react';
-import promoBg from '../../assets/images/promo-bg.png';
+import promoBg from '../../assets/images/promo-bg.webp';
 import { useTranslation } from 'react-i18next';
 
 export default function PromoVideo() {

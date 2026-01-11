@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import catFloral from '../../assets/images/cat-floral.png';
-import catWoody from '../../assets/images/cat-woody.png';
-import catOriental from '../../assets/images/cat-oriental.png';
-import catFresh from '../../assets/images/cat-fresh.png';
+import catFloral from '../../assets/images/cat-floral.webp';
+import catWoody from '../../assets/images/cat-woody.webp';
+import catOriental from '../../assets/images/cat-oriental.webp';
+import catFresh from '../../assets/images/cat-fresh.webp';
 import { useTranslation } from 'react-i18next';
 
 export default function CategoryGrid() {

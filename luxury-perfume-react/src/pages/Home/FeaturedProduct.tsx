@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useProductStore } from '../../store/useProductStore';
-import featSantal from '../../assets/images/feat-santal.png';
+import featSantal from '../../assets/images/feat-santal.webp';
 
 export default function FeaturedProduct() {
     const { t } = useTranslation();

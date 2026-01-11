@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
-import ingRose from '../../assets/images/ing-rose.png';
-import ingOud from '../../assets/images/ing-oud.png';
-import ingVanilla from '../../assets/images/ing-vanilla.png';
+import ingRose from '../../assets/images/ing-rose.webp';
+import ingOud from '../../assets/images/ing-oud.webp';
+import ingVanilla from '../../assets/images/ing-vanilla.webp';
 import { useTranslation } from 'react-i18next';
 
 export default function Ingredients() {

@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import heroBg from '../../assets/images/hero-bg.png';
+import heroBg from '../../assets/images/hero-bg.webp';
 import { useTranslation } from 'react-i18next';
 
 export default function Hero() {
