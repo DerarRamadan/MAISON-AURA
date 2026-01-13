@@ -100,7 +100,11 @@
             "fresh": "Fresh",
             "all": "All Categories",
             "men": "Men",
-            "women": "Women"
+            "women": "Women",
+            "منعشة": "Fresh",
+            "شرقية": "Oriental",
+            "زهرية": "Floral",
+            "خشبية": "Woody"
         },
         "empty": "No products match your selection.",
         "reset_btn": "Reset Filters"

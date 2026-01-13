@@ -18,7 +18,7 @@ export default function ProductModal({ isOpen, onClose, onSave, product }: Produ
         brand: '',
         price: 0,
         image: '',
-        category: 'شرقية',
+        category: 'oriental',
         description: '',
     });
 
@@ -29,7 +29,7 @@ export default function ProductModal({ isOpen, onClose, onSave, product }: Produ
                 brand: product.brand,
                 price: product.price,
                 image: product.image,
-                category: product.category || 'شرقية',
+                category: product.category || 'oriental',
                 description: product.description || '',
             });
         } else {
@@ -38,7 +38,7 @@ export default function ProductModal({ isOpen, onClose, onSave, product }: Produ
                 brand: '',
                 price: 0,
                 image: '',
-                category: 'شرقية',
+                category: 'oriental',
                 description: '',
             });
         }
@@ -62,10 +62,10 @@ export default function ProductModal({ isOpen, onClose, onSave, product }: Produ
     };
 
     const categories = [
-        { value: 'زهرية', label: 'shop.categories.floral' },
-        { value: 'خشبية', label: 'shop.categories.woody' },
-        { value: 'شرقية', label: 'shop.categories.oriental' },
-        { value: 'منعشة', label: 'shop.categories.fresh' },
+        { value: 'floral', label: 'shop.categories.floral' },
+        { value: 'woody', label: 'shop.categories.woody' },
+        { value: 'oriental', label: 'shop.categories.oriental' },
+        { value: 'fresh', label: 'shop.categories.fresh' },
     ];
 
     if (!isOpen) return null;

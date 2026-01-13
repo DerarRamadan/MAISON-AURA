@@ -15,10 +15,10 @@ export default function ShopPage() {
     const [sortOption, setSortOption] = useState('default');
 
     const CATEGORIES = [
-        { name: 'زهرية', label: t('shop.categories.floral') },
-        { name: 'خشبية', label: t('shop.categories.woody') },
-        { name: 'شرقية', label: t('shop.categories.oriental') },
-        { name: 'منعشة', label: t('shop.categories.fresh') },
+        { name: 'floral', label: t('shop.categories.floral') },
+        { name: 'woody', label: t('shop.categories.woody') },
+        { name: 'oriental', label: t('shop.categories.oriental') },
+        { name: 'fresh', label: t('shop.categories.fresh') },
     ];
 
     // Initialize from URL
