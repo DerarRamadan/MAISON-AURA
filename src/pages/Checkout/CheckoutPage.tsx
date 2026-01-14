@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useOrderStore } from '../../store/useOrderStore';
 
+// صفحة إتمام الطلب (Checkout)
 export default function CheckoutPage() {
     const { cart, total, clearCart } = useCart();
     const [step, setStep] = useState<'form' | 'success'>('form');
@@ -14,7 +15,7 @@ export default function CheckoutPage() {
     const { addOrder, orders } = useOrderStore();
     const [orderId, setOrderId] = useState<number>(0);
 
-    // Form state
+    // حالة بيانات النموذج
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -33,7 +34,7 @@ export default function CheckoutPage() {
         e.preventDefault();
         setIsLoading(true);
 
-        // Validate phone number
+        // التحقق من صحة رقم الهاتف (يجب أن يكون 9 أو 10 أرقام)
         const phoneRegex = /^[0-9]{9,10}$/;
         if (!phoneRegex.test(formData.phone)) {
             alert(t('checkout.phone_error') || 'رقم الهاتف يجب أن يتكون من 9 أو 10 أرقام');
@@ -41,15 +42,15 @@ export default function CheckoutPage() {
             return;
         }
 
-        // Simulate API call
+        // محاكاة الاتصال بالخادم
         await new Promise(resolve => setTimeout(resolve, 2000));
 
-        // Generate ID
+        // إنشاء معرف جديد للطلب
         const newId = Math.max(2000, ...orders.map(o => o.id)) + 1;
 
-        // Create order in store
+        // إضافة الطلب للمخزن
         addOrder({
-            id: newId, // Pass explicit ID now (need to update store type to allow this or update store logic)
+            id: newId, // تمرير المعرف بشكل صريح
             customerName: `${formData.firstName} ${formData.lastName}`,
             email: formData.email,
             items: cart,
@@ -98,7 +99,7 @@ export default function CheckoutPage() {
             <h1 className="text-4xl font-serif font-bold mb-12 text-center">{t('checkout.title')}</h1>
 
             <div className="flex flex-col lg:flex-row gap-12">
-                {/* Form */}
+                {/* نموذج البيانات (Form) */}
                 <div className="flex-1">
                     <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-sm border border-gray-100">
                         <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
@@ -148,7 +149,7 @@ export default function CheckoutPage() {
                     </form>
                 </div>
 
-                {/* Summary */}
+                {/* ملخص الطلب (Order Summary) */}
                 <div className="w-full lg:w-96 h-fit lg:sticky lg:top-24">
                     <div className="bg-gray-50 p-6 rounded-lg">
                         <h3 className="font-serif font-bold text-xl mb-6">{t('checkout.order_summary')}</h3>

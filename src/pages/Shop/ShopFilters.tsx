@@ -10,6 +10,7 @@ interface ShopFiltersProps {
     maxPriceLimit: number;
 }
 
+// مكون الفلترة الجانبي (Filters Sidebar)
 export default function ShopFilters({
     categories,
     selectedCategories,

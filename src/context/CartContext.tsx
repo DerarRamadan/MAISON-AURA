@@ -1,31 +1,36 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import type { Product } from '../data/products';
 
+// واجهة عنصر السلة (تضيف الكمية للمنتج)
 export interface CartItem extends Product {
     quantity: number;
 }
 
+// واجهة السياق (Context)
 interface CartContextType {
-    cart: CartItem[];
-    addToCart: (product: Product) => void;
-    removeFromCart: (productId: number) => void;
-    updateQuantity: (productId: number, delta: number) => void;
-    clearCart: () => void;
-    total: number;
-    cartCount: number;
-    isCartOpen: boolean;
+    cart: CartItem[]; // عناصر السلة
+    addToCart: (product: Product) => void; // دالة إضافة للسلة
+    removeFromCart: (productId: number) => void; // دالة حذف من السلة
+    updateQuantity: (productId: number, delta: number) => void; // دالة تعديل الكمية
+    clearCart: () => void; // إفراغ السلة
+    total: number; // الإجمالي المالي
+    cartCount: number; // عدد العناصر
+    isCartOpen: boolean; // هل القائمة الجانبية للسلة مفتوحة؟
     setIsCartOpen: (isOpen: boolean) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
+// مزود السياق (Provider)
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    // تحميل السلة من LocalStorage عند البدء
     const [cart, setCart] = useState<CartItem[]>(() => {
         const saved = localStorage.getItem('cart');
         return saved ? JSON.parse(saved) : [];
     });
     const [isCartOpen, setIsCartOpen] = useState(false);
 
+    // حفظ السلة في LocalStorage عند أي تغيير
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cart));
     }, [cart]);

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useAdminStore, type AdminUser } from '../../store/useAdminStore';
 import { useAuthStore } from '../../store/useAuthStore';
 
+// صفحة إدارة المستخدمين (Admin Users)
 export default function AdminUsers() {
     const { t } = useTranslation();
     const { admins, addAdmin, updateAdmin, removeAdmin } = useAdminStore();
@@ -87,6 +88,7 @@ export default function AdminUsers() {
         }
     };
 
+    // تصفية المستخدمين حسب البحث
     const filteredUsers = admins.filter(user =>
         user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||

@@ -16,10 +16,12 @@ import ProtectedRoute from './pages/Admin/components/ProtectedRoute';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
+// المكون الرئيسي للتطبيق
+// يحتوي على إعدادات التوجيه (Routing) والهيكل العام للصفحات
 function App() {
     const { i18n } = useTranslation();
 
-    // Update document direction based on language globally
+    // تحديث اتجاه الصفحة (RTL/LTR) بناءً على اللغة المختارة
     useEffect(() => {
         const dir = i18n.language === 'ar' ? 'rtl' : 'ltr';
         document.dir = dir;
@@ -28,10 +30,11 @@ function App() {
     }, [i18n.language]);
 
     return (
+        // مزود سلة المشتريات (Cart Context) لتوفير بيانات السلة لكل المكونات
         <CartProvider>
             <Router>
                 <Routes>
-                    {/* Public Routes - Wrapped in Main Layout */}
+                    {/* المسارات العامة (Public Routes) - محاطة بتخطيط الصفحة الرئيسي */}
                     <Route element={<Layout><Outlet /></Layout>}>
                         <Route path="/" element={<HomePage />} />
                         <Route path="/shop" element={<ShopPage />} />
@@ -41,7 +44,7 @@ function App() {
 
                     <Route path="/admin/login" element={<AdminLogin />} />
 
-                    {/* Admin Routes - Wrapped in AdminLayout (includes AdminHeader) */}
+                    {/* مسارات لوحة التحكم (Admin Routes) - محمية وتستخدم تخطيط لوحة التحكم */}
                     <Route path="/admin" element={<ProtectedRoute />}>
                         <Route element={<AdminLayout />}>
                             <Route index element={<AdminDashboard />} />

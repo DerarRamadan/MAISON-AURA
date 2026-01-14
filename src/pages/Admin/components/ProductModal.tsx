@@ -10,6 +10,7 @@ interface ProductModalProps {
     product?: Product | null;
 }
 
+// نافذة إضافة/تعديل المنتج (Product Modal)
 export default function ProductModal({ isOpen, onClose, onSave, product }: ProductModalProps) {
     const { t } = useTranslation();
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);

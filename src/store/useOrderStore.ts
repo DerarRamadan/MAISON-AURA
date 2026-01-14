@@ -1,23 +1,25 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+// تعريف واجهة الطلب (Order Interface)
 export interface Order {
-    id: number;
-    customerName: string;
-    email: string;
-    items: any[];
-    total: number;
-    status: 'processing' | 'shipped' | 'delivered' | 'cancelled';
-    date: string;
-    phone?: string;
-    address?: string;
-    city?: string;
+    id: number; // رقم الطلب
+    customerName: string; // اسم العميل
+    email: string; // البريد الإلكتروني
+    items: any[]; // المنتجات المطلوبة
+    total: number; // الإجمالي
+    status: 'processing' | 'shipped' | 'delivered' | 'cancelled'; // حالة الطلب
+    date: string; // تاريخ الطلب
+    phone?: string; // رقم الهاتف
+    address?: string; // العنوان
+    city?: string; // المدينة
 }
 
+// واجهة حالة مخزن الطلبات
 interface OrderState {
     orders: Order[];
-    addOrder: (order: Order | Omit<Order, 'id'>) => void;
-    updateOrderStatus: (id: number, status: Order['status']) => void;
+    addOrder: (order: Order | Omit<Order, 'id'>) => void; // إضافة طلب
+    updateOrderStatus: (id: number, status: Order['status']) => void; // تحديث حالة طلب
 }
 
 // Mock initial orders
@@ -26,6 +28,7 @@ const initialOrders: Order[] = [
     { id: 2002, customerName: 'سارة خالد', email: 'sara@example.com', items: [], total: 850, status: 'shipped', date: '2024-03-14' },
 ];
 
+// إنشاء مخزن الطلبات
 export const useOrderStore = create<OrderState>()(
     persist(
         (set) => ({

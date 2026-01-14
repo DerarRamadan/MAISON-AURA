@@ -4,6 +4,7 @@ import { useProductStore } from '../../store/useProductStore';
 import { useTranslation } from 'react-i18next';
 
 export default function BestSellers() {
+    // جلب المنتجات من المخزن وأخذ أول 3 فقط للعرض
     const products = useProductStore(state => state.products);
     const featuredProducts = products.slice(0, 3);
     const { t } = useTranslation();

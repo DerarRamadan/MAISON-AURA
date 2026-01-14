@@ -7,6 +7,8 @@ import { useAuthStore } from '../../../store/useAuthStore';
 import AdminHeader from './AdminHeader';
 import { motion, AnimatePresence } from 'framer-motion';
 
+// تخطيط لوحة التحكم (Admin Layout)
+// يتضمن القائمة الجانبية (Sidebar) والرأس (Header) ومساحة المحتوى الرئيسي
 export default function AdminLayout() {
     const location = useLocation();
     const navigate = useNavigate();
@@ -14,6 +16,7 @@ export default function AdminLayout() {
     const logout = useAuthStore((state: any) => state.logout);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+    // روابط القائمة الجانبية
     const sidebarLinks = [
         { name: t('admin.dashboard'), path: '/admin', icon: LayoutDashboard },
         { name: t('admin.products'), path: '/admin/products', icon: Package },
@@ -49,6 +52,7 @@ export default function AdminLayout() {
                 </nav>
             </div>
 
+            {/* زر تسجيل الخروج */}
             <div className="mt-auto p-6 border-t border-gray-100">
                 <button
                     onClick={() => {

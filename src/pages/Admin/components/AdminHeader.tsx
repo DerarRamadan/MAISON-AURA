@@ -6,6 +6,7 @@ interface AdminHeaderProps {
     onMenuClick: () => void;
 }
 
+// رأس لوحة التحكم (Admin Header)
 export default function AdminHeader({ onMenuClick }: AdminHeaderProps) {
     const { i18n } = useTranslation();
     const user = useAuthStore((state) => state.user);

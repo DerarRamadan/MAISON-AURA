@@ -14,10 +14,11 @@ export default function Navbar() {
     const { t, i18n } = useTranslation();
     const location = useLocation();
 
-    // specific paths that should have transparent header with hero image
+    // تحديد الصفحات التي يكون فيها الهيدر شفافًا (مثل الصفحة الرئيسية وصفحة المجموعات)
     const isHeroPage = location.pathname === '/' || location.pathname === '/#collections';
 
     useEffect(() => {
+        // تغيير خلفية الهيدر عند التمرير لأسفل
         const handleScroll = () => setScrolled(window.scrollY > 50);
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
@@ -25,11 +26,12 @@ export default function Navbar() {
 
 
 
+    // دالة تبديل اللغة
     const toggleLanguage = () => {
         i18n.changeLanguage(i18n.language === 'ar' ? 'en' : 'ar');
     };
 
-    // Helper to check if a link is truly active (handling hashes)
+    // التحقق مما إذا كان الرابط نشطًا حاليًا (يدعم الروابط الداخلية #)
     const isLinkActive = (path: string) => {
         if (path === '/') return location.pathname === '/' && location.hash === '';
         if (path.startsWith('/#')) return location.pathname === '/' && location.hash === path.substring(1);
@@ -46,26 +48,26 @@ export default function Navbar() {
     return (
         <nav className={cn(
             "fixed w-full z-40 transition-all duration-300 px-6 py-4 flex justify-between items-center border-b",
-            // Logic: 
-            // 1. If scrolled or mobile menu open -> specific background (cream/90)
-            // 2. If NOT scrolled and IS hero page -> transparent
-            // 3. If NOT scrolled and NOT hero page -> black background (for visibility)
+            // تحديد نمط الهيدر بناءً على الحالة (Scrolled) وموقع الصفحة (Hero Page)
+            // 1. إذا تم التمرير أو كانت القائمة مفتوحة -> خلفية كريمية
+            // 2. إذا كنا في أعلى صفحة Hero -> شفاف
+            // 3. غير ذلك -> خلفية سوداء
             (scrolled || mobileMenuOpen)
                 ? "bg-cream/90 backdrop-blur border-gray-100 shadow-sm"
                 : isHeroPage
                     ? "bg-transparent border-transparent"
                     : "bg-black border-transparent"
         )}>
-            {/* Logo */}
+            {/* الشعار (Logo) */}
             <NavLink to="/" className={cn(
                 "text-2xl font-serif font-bold tracking-wider hover:text-gold transition-colors",
-                // Text color logic
+                // منطق لون النص بناءً على الحالة
                 (scrolled || mobileMenuOpen) ? "text-black-rich" : "text-white"
             )}>
                 MAISON AURA
             </NavLink>
 
-            {/* Desktop Links */}
+            {/* روابط سطح المكتب (Desktop Links) */}
             <div className="hidden md:flex space-x-8 rtl:space-x-reverse text-sm font-bold tracking-wide">
                 {links.map(link => (
                     <NavLink
@@ -87,12 +89,12 @@ export default function Navbar() {
                 ))}
             </div>
 
-            {/* Actions */}
+            {/* الأزرار والإجراءات (Actions) */}
             <div className={cn(
                 "flex items-center space-x-6 rtl:space-x-reverse",
                 (scrolled || mobileMenuOpen) ? "text-black-rich" : "text-white"
             )}>
-                {/* Language Switcher */}
+                {/* مبدل اللغة (Language Switcher) */}
                 <button onClick={toggleLanguage} className="hover:text-gold transition-colors flex items-center gap-1 font-sans font-bold text-xs uppercase">
                     <Globe className="w-4 h-4" />
                     {i18n.language === 'ar' ? 'EN' : 'AR'}
@@ -122,12 +124,12 @@ export default function Navbar() {
                 </button>
             </div>
 
-            {/* Mobile Menu Drawer */}
+            {/* القائمة الجانبية للجوال (Mobile Menu Drawer) */}
             {createPortal(
                 <AnimatePresence>
                     {mobileMenuOpen && (
                         <>
-                            {/* Overlay */}
+                            {/* طبقة التعتيم الخلفية (Overlay) */}
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -136,7 +138,7 @@ export default function Navbar() {
                                 className="fixed inset-0 bg-black/60 z-[9998] md:hidden backdrop-blur-sm"
                             />
 
-                            {/* Drawer */}
+                            {/* القائمة الجانبية (Drawer) */}
                             <motion.div
                                 initial={{ x: i18n.language === 'ar' ? '100%' : '-100%' }}
                                 animate={{ x: 0 }}
@@ -147,7 +149,7 @@ export default function Navbar() {
                                     i18n.language === 'ar' ? "right-0" : "left-0"
                                 )}
                             >
-                                {/* Drawer Header */}
+                                {/* رأس القائمة (Drawer Header) */}
                                 <div className="flex items-center justify-between p-6 border-b border-gray-100">
                                     <span className="text-xl font-serif font-bold text-black-rich">MAISON AURA</span>
                                     <button
@@ -158,7 +160,7 @@ export default function Navbar() {
                                     </button>
                                 </div>
 
-                                {/* Drawer Content */}
+                                {/* محتوى القائمة (Drawer Content) */}
                                 <div className="flex flex-col p-8 space-y-6 overflow-y-auto">
                                     {links.map(link => {
                                         const active = isLinkActive(link.path);
@@ -183,7 +185,7 @@ export default function Navbar() {
 
                                     <div className="h-px bg-gray-100 w-full my-4" />
 
-                                    {/* Mobile Actions */}
+                                    {/* إجراءات الجوال (Mobile Actions) */}
                                     <div className="space-y-4">
                                         <button
                                             onClick={() => {

@@ -1,3 +1,4 @@
+// تعريف واجهة بيانات المنتج
 export interface Product {
     id: number;
     name: string;
@@ -8,7 +9,8 @@ export interface Product {
     description?: string;
 }
 
-// Helper to resolve images from src/assets/images
+// دالة مساعدة لجلب مسار الصور من مجلد الأصول (assets)
+// تستخدم import.meta.url لضمان عمل المسارات بشكل صحيح بعد البناء (Build)
 const getImg = (filename: string) => {
     return new URL(`../assets/images/${filename}`, import.meta.url).href;
 }

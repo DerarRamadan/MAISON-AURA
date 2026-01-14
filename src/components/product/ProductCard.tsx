@@ -13,12 +13,14 @@ export default function ProductCard({ product }: ProductCardProps) {
     const navigate = useNavigate();
     const { t } = useTranslation();
 
+    // دالة إضافة المنتج للسلة (مع منع الانتقال لصفحة التفاصيل عند النقر على الزر)
     const handleAddToCart = (e: React.MouseEvent) => {
         e.stopPropagation();
         addToCart(product);
     };
 
     return (
+        // بطاقة المنتج، تنقلك للتفاصيل عند النقر
         <div
             onClick={() => navigate(`/product/${product.id}`)}
             className="group cursor-pointer bg-white p-3 shadow-sm border border-gray-50 hover:shadow-xl transition-all duration-500 relative flex flex-col h-full"

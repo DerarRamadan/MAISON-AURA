@@ -4,6 +4,8 @@ import ingOud from '../../assets/images/ing-oud.webp';
 import ingVanilla from '../../assets/images/ing-vanilla.webp';
 import { useTranslation } from 'react-i18next';
 
+// قسم مكونات العطور (Ingredients)
+// يعرض المكونات الأساسية للعطور مع تأثيرات وتنسيق شبكي
 export default function Ingredients() {
     const { t } = useTranslation();
 
@@ -13,6 +15,7 @@ export default function Ingredients() {
                 <h2 className="text-4xl font-serif">{t('home_sections.ingredients.title')}</h2>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 px-4 h-96">
+                {/* المكون الأول: الورد */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}

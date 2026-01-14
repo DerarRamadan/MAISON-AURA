@@ -8,6 +8,7 @@ interface OrderModalProps {
     onUpdateStatus: (id: number, status: Order['status']) => void;
 }
 
+// نافذة تفاصيل الطلب (Order Modal)
 export default function OrderModal({ order, onClose, onUpdateStatus }: OrderModalProps) {
     const { t } = useTranslation();
 

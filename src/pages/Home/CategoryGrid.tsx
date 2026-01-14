@@ -10,6 +10,7 @@ export default function CategoryGrid() {
     const navigate = useNavigate();
     const { t } = useTranslation();
 
+    // قائمة التصنيفات: الاسم، الوصف، الصورة، ومفتاح التصفية
     const categories = [
         { name: t('home_sections.category_grid.categories.floral.name'), desc: t('home_sections.category_grid.categories.floral.desc'), img: catFloral, filter: "زهرية" },
         { name: t('home_sections.category_grid.categories.woody.name'), desc: t('home_sections.category_grid.categories.woody.desc'), img: catWoody, filter: "خشبية" },
@@ -33,6 +34,7 @@ export default function CategoryGrid() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: idx * 0.1 }}
+                            // عند النقر، الانتقال لصفحة المتجر مع تصفية المنتجات حسب الفئة المختارة
                             onClick={() => navigate(`/shop?category=${cat.filter}`)}
                             className="group text-center cursor-pointer"
                         >

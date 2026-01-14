@@ -7,7 +7,7 @@ import CartSidebar from '../cart/CartSidebar';
 export default function Layout({ children }: { children: React.ReactNode }) {
     const { pathname, hash } = useLocation();
 
-    // Scroll to top on route change or to hash section
+    // إعادة التمرير للأعلى عند تغيير المسار، أو التمرير للقسم المحدد (Hash)
     useEffect(() => {
         if (hash) {
             const element = document.querySelector(hash);
@@ -20,6 +20,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }, [pathname, hash]);
 
     return (
+        // الهيكل العام للصفحة: Navbar في الأعلى، المحتوى في الوسط، Footer في الأسفل
+        // بالإضافة للقائمة الجانبية للسلة
         <div className="min-h-screen flex flex-col font-sans text-black-rich bg-cream selection:bg-gold selection:text-white">
             <Navbar />
             <CartSidebar />

@@ -4,14 +4,18 @@ import { useProductStore } from '../../store/useProductStore';
 import { useOrderStore } from '../../store/useOrderStore';
 import { useUserStore } from '../../store/useUserStore';
 
+// لوحة التحكم الرئيسية للمسؤول (Dashboard)
+// تعرض إحصائيات عامة، آخر الطلبات، والمنتجات الأكثر مبيعًا
 export default function AdminDashboard() {
     const { t } = useTranslation();
     const products = useProductStore(state => state.products);
     const orders = useOrderStore(state => state.orders);
     const users = useUserStore(state => state.users);
 
+    // حساب إجمالي المبيعات
     const totalSalesValue = orders.reduce((sum, order) => sum + order.total, 0);
 
+    // إعداد بطاقات الإحصائيات
     const stats = [
         { title: t('admin.stats.total_sales'), value: `${totalSalesValue.toLocaleString()} ${t('common.currency')}`, icon: DollarSign, change: '+12%', color: 'from-green-500 to-emerald-600' },
         { title: t('admin.stats.new_orders'), value: orders.length.toString(), icon: ShoppingBag, change: '+5%', color: 'from-blue-500 to-indigo-600' },

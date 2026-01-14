@@ -3,28 +3,30 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
 
+
+// مكتبة i18next لإدارة تعدد اللغات
 i18n
-    // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
+    // تحميل ملفات الترجمة عبر HTTP (من المجلد العامة /public/locales)
     // learn more: https://github.com/i18next/i18next-http-backend
     .use(Backend)
-    // detect user language
+    // اكتشاف لغة المستخدم تلقائيًا (من المتصفح)
     // learn more: https://github.com/i18next/i18next-browser-languageDetector
     .use(LanguageDetector)
-    // pass the i18n instance to react-i18next.
+    // تمرير نسخة i18n إلى react-i18next
     .use(initReactI18next)
-    // init i18next
+    // تهيئة الإعدادات
     // for all options read: https://www.i18next.com/overview/configuration-options
     .init({
-        fallbackLng: 'ar',
-        lng: 'ar', // Default to Arabic
-        debug: true,
+        fallbackLng: 'ar', // اللغة الاحتياطية
+        lng: 'ar', // اللغة الافتراضية: العربية
+        debug: true, // تفعيل وضع التصحيح في الكونسول
 
         interpolation: {
-            escapeValue: false, // not needed for react as it escapes by default
+            escapeValue: false, // لا حاجة للهروب (escaping) لأن React يقوم بذلك تلقائيًا
         },
 
         backend: {
-            loadPath: '/locales/{{lng}}/translation.json',
+            loadPath: '/locales/{{lng}}/translation.json', // مسار ملفات الترجمة
         }
     });
 

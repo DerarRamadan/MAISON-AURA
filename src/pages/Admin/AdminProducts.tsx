@@ -5,6 +5,8 @@ import { useProductStore } from '../../store/useProductStore';
 import ProductModal from './components/ProductModal';
 import type { Product } from '../../data/products';
 
+// صفحة إدارة المنتجات (Admin Products)
+// تعرض جدول المنتجات مع إمكانيات الإضافة، التعديل، والحذف
 export default function AdminProducts() {
     const { t } = useTranslation();
     const { products, addProduct, updateProduct, deleteProduct } = useProductStore();
@@ -12,6 +14,7 @@ export default function AdminProducts() {
     const [editingProduct, setEditingProduct] = useState<Product | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
 
+    // حفظ المنتج (إضافة أو تعديل)
     const handleSave = (productData: Omit<Product, 'id'>) => {
         if (editingProduct) {
             updateProduct(editingProduct.id, productData);
@@ -20,11 +23,13 @@ export default function AdminProducts() {
         }
     };
 
+    // فتح نافذة التعديل
     const handleEdit = (product: Product) => {
         setEditingProduct(product);
         setIsModalOpen(true);
     };
 
+    // تصفية المنتجات حسب البحث
     const filteredProducts = products.filter(p =>
         p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.brand.toLowerCase().includes(searchQuery.toLowerCase())

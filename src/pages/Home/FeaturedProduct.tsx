@@ -6,6 +6,7 @@ import featSantal from '../../assets/images/feat-santal.webp';
 
 export default function FeaturedProduct() {
     const { t } = useTranslation();
+    // البحث عن المنتج رقم 6 لعرضه كمنتج مميز
     const product = useProductStore(state => state.products.find(p => p.id === 6));
 
     if (!product) return null;

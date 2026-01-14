@@ -6,24 +6,26 @@ import { useTranslation } from 'react-i18next';
 
 export default function Hero() {
     const ref = useRef(null);
+    // تأثير Parallax عند التمرير
     const { scrollYProgress } = useScroll({
         target: ref,
         offset: ["start start", "end start"]
     });
     const { t } = useTranslation();
 
+    // تحويل قيمة التمرير إلى حركة وتغيير في الشفافية
     const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
     return (
         <header ref={ref} className="relative h-screen flex items-center justify-center overflow-hidden">
-            {/* Parallax Background */}
+            {/* خلفية بتأثير parallax */}
             <motion.div style={{ y, opacity }} className="absolute inset-0 z-0">
                 <img src={heroBg} alt="Hero Perfume" className="w-full h-full object-cover opacity-90" />
                 <div className="absolute inset-0 bg-black/30"></div>
             </motion.div>
 
-            {/* Content */}
+            {/* محتوى النص (العنوان والزر) */}
             <div className="relative z-10 text-center text-white mix-blend-difference px-4">
                 <motion.p
                     initial={{ y: 20, opacity: 0 }}

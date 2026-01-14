@@ -1,3 +1,4 @@
+// صفحة لوحة التحكم الرئيسية (Admin Page Placeholder)
 export default function AdminPage() {
     return (
         <div className="pt-32 pb-16 px-6 container mx-auto text-center">

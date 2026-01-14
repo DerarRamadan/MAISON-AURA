@@ -4,6 +4,7 @@ import { useAdminStore } from '../../store/useAdminStore'; // Import AdminStore
 import { useNavigate } from 'react-router-dom';
 import { Lock, User } from 'lucide-react'; // Added User icon
 
+// صفحة تسجيل دخول المسؤول (Admin Login)
 export default function AdminLogin() {
     const [username, setUsername] = useState<string>(''); // Changed from just password to username + password
     const [password, setPassword] = useState<string>('');
@@ -18,6 +19,7 @@ export default function AdminLogin() {
         e.preventDefault();
         setError('');
 
+        // التحقق من بيانات المسؤول من المخزن
         const adminUser = getAdminByCredentials(username, password);
 
         if (adminUser) {

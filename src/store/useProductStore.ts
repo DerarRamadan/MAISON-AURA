@@ -2,14 +2,16 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { products as initialProducts, type Product } from '../data/products';
 
+// واجهة حالة المنتجات
 interface ProductState {
-    products: Product[];
-    addProduct: (product: Omit<Product, 'id'>) => void;
-    updateProduct: (id: number, product: Partial<Product>) => void;
-    deleteProduct: (id: number) => void;
-    getProduct: (id: number) => Product | undefined;
+    products: Product[]; // قائمة المنتجات
+    addProduct: (product: Omit<Product, 'id'>) => void; // إضافة منتج
+    updateProduct: (id: number, product: Partial<Product>) => void; // تحديث منتج
+    deleteProduct: (id: number) => void; // حذف منتج
+    getProduct: (id: number) => Product | undefined; // الحصول على منتج معين
 }
 
+// إنشاء مخزن المنتجات
 export const useProductStore = create<ProductState>()(
     persist(
         (set, get) => ({

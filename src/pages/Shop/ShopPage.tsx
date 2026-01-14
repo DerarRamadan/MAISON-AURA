@@ -6,10 +6,12 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { useProductStore } from '../../store/useProductStore';
 
+// صفحة المتجر الرئيسية
+// تحتوي على قائمة المنتجات، الفلترة، والترتيب
 export default function ShopPage() {
     const [searchParams] = useSearchParams();
     const { t } = useTranslation();
-    const products = useProductStore(state => state.products);
+    const products = useProductStore(state => state.products); // جلب المنتجات من المخزن
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [priceRange, setPriceRange] = useState(2000);
     const [sortOption, setSortOption] = useState('default');
@@ -21,19 +23,20 @@ export default function ShopPage() {
         { name: 'fresh', label: t('shop.categories.fresh') },
     ];
 
-    // Initialize from URL
+    // تهيئة الفلتر بناءً على روابط URL (مثلاً عند القدوم من الصفحة الرئيسية)
     useEffect(() => {
         const catParam = searchParams.get('category');
         if (catParam) {
             setSelectedCategories([catParam]);
         }
         const searchParam = searchParams.get('search');
-        // Search logic could be added here if we had a text search, for now we just filter
+        // يمكن إضافة منطق البحث النصي هنا مستقبلاً
         if (searchParam && searchParam === 'santal') {
-            // Show all or specific logic
+            // عرض منتجات محددة
         }
     }, [searchParams]);
 
+    // دالة التعامل مع تغيير الفئات
     const handleCategoryChange = (category: string) => {
         setSelectedCategories(prev =>
             prev.includes(category)
@@ -42,18 +45,19 @@ export default function ShopPage() {
         );
     };
 
+    // فلترة وترتيب المنتجات (Memoized لتحسين الأداء)
     const filteredProducts = useMemo(() => {
         let result = products;
 
-        // Filter by Category
+        // فلترة حسب التصنيف
         if (selectedCategories.length > 0) {
             result = result.filter(p => p.category && selectedCategories.includes(p.category));
         }
 
-        // Filter by Price
+        // فلترة حسب السعر
         result = result.filter(p => p.price <= priceRange);
 
-        // Sort
+        // الترتيب
         if (sortOption === 'price-asc') {
             result = [...result].sort((a, b) => a.price - b.price);
         } else if (sortOption === 'price-desc') {

@@ -2,14 +2,17 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface AuthState {
-    isAuthenticated: boolean;
-    user: { id: string; name: string; username: string; role: string; phone: string } | null;
+    isAuthenticated: boolean; // هل المستخدم مسجل دخوله أم لا
+    user: { id: string; name: string; username: string; role: string; phone: string } | null; // بيانات المستخدم الحالي
+    // دوال التحكم في حالة الجلسة
     login: (user: { id: string; name: string; username: string; role: string; phone: string }) => boolean;
     logout: () => void;
     updateUser: (updates: Partial<{ id: string; name: string; username: string; role: string; phone: string }>) => void;
 }
 
+// إنشاء مخزن المصادقة (Authentication Store)
 export const useAuthStore = create<AuthState>()(
+    // حفظ حالة تسجيل الدخول في LocalStorage
     persist(
         (set) => ({
             isAuthenticated: false,
@@ -24,7 +27,7 @@ export const useAuthStore = create<AuthState>()(
             })),
         }),
         {
-            name: 'auth-storage',
+            name: 'auth-storage', // اسم التخزين
         }
     )
 );

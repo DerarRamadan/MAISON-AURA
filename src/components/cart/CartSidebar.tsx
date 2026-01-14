@@ -18,7 +18,7 @@ export default function CartSidebar() {
         <AnimatePresence>
             {isCartOpen && (
                 <>
-                    {/* Backdrop */}
+                    {/* طبقة التعتيم الخلفية (Backdrop) */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -27,26 +27,20 @@ export default function CartSidebar() {
                         className="fixed inset-0 bg-black/50 z-50 backdrop-blur-sm"
                     />
 
-                    {/* Sidebar */}
+                    {/* القائمة الجانبية */}
                     <motion.div
                         initial={{ x: '100%' }}
                         animate={{ x: 0 }}
                         exit={{ x: '100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                        // تحديد اتجاه القائمة الجانبية
                         className="fixed inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl z-50 flex flex-col ltr:right-0 rtl:left-0 rtl:right-auto"
-                        style={{ right: document.dir === 'rtl' ? 'auto' : 0, left: document.dir === 'rtl' ? 0 : 'auto', transform: 'none' }} // Override specific positioning logic if needed, but framer motion handles generic x. 
-                    // Note: Framer motion x: '100%' might slide it to the right. For RTL (left side), we might want x: '-100%'.
-                    // Let's stick to simple layout first: keep it on the right or adapt based on dir? Standard for RTL is often left or right sidebar. 
-                    // Let's assume right-side cart for now, or adapt based on dir.
-                    // Actually, standard RTL designs often flip the sidebar to the left.
+                        style={{ right: document.dir === 'rtl' ? 'auto' : 0, left: document.dir === 'rtl' ? 0 : 'auto', transform: 'none' }}
                     >
                         {/* 
-                           Correction: `fixed inset-y-0 right-0` puts it on the right. 
-                           For RTL, we commonly want it on the left? Or just keep it right?
-                           Usually "end" side. 
-                           LTR: end = right. RTL: end = left.
-                           Tailwind `right-0` is physical right. `end-0` is logical end.
-                           Let's use `end-0`.
+                           ملاحظة: نستخدم `fixed inset-y-0 right-0` لوضع القائمة على اليمين في الحالة الافتراضية.
+                           في وضع RTL (العربية)، نريد القائمة على اليسار.
+                           لذلك نستخدم منطق `document.dir` لتحديد الموضع الصحيح (right أو left) ديناميكيًا.
                         */}
                         <div className="h-full flex flex-col">
                             <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-cream">

@@ -6,6 +6,7 @@ export default function Footer() {
     const { t } = useTranslation();
 
     return (
+        // تذييل الصفحة (Footer) يحتوي على روابط ومعلومات التواصل
         <footer className="bg-black-rich text-white py-16 px-6 border-t border-gold/20">
             <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-start">
                 <div className="col-span-1 md:col-span-2 md:pe-12">

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useOrderStore, type Order } from '../../store/useOrderStore';
 import OrderModal from './components/OrderModal';
 
+// صفحة إدارة الطلبات (Admin Orders)
 export default function AdminOrders() {
     const { t } = useTranslation();
     const { orders, updateOrderStatus } = useOrderStore();
@@ -11,6 +12,7 @@ export default function AdminOrders() {
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState<string>('all');
 
+    // تصفية الطلبات حسب البحث وحالة الطلب
     const filteredOrders = useMemo(() => {
         return orders.filter(order => {
             const matchesSearch = order.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -20,6 +22,7 @@ export default function AdminOrders() {
         });
     }, [orders, searchQuery, statusFilter]);
 
+    // تحديث حالة الطلب
     const handleStatusUpdate = (id: number, status: Order['status']) => {
         updateOrderStatus(id, status);
         // Also update local selected order if it's the one being modified

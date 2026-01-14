@@ -8,6 +8,7 @@ export default function Journey() {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
     const { t } = useTranslation();
 
+    // خطوات رحلة العطر (Fragrance Journey)
     const steps = [
         {
             id: "01",
@@ -33,6 +34,7 @@ export default function Journey() {
                 <p className="text-gray-500">{t('home_sections.journey.subtitle')}</p>
             </div>
 
+            {/* قائمة الخطوات (Accordion) */}
             <div className="border-t border-black/10 max-w-4xl mx-auto">
                 {steps.map((step, idx) => {
                     const isOpen = openIndex === idx;

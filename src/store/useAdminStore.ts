@@ -1,22 +1,24 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
+// تعريف واجهة بيانات المسؤول (Admin Interface)
 export interface AdminUser {
-    id: string;
-    name: string;
-    username: string;
-    phone: string;
-    password: string; // In a real app, this should be hashed. Here we store it for the prompt's simplicity.
-    role: 'admin' | 'editor';
-    createdAt: string;
+    id: string; // المعرف الفريد
+    name: string; // الاسم
+    username: string; // اسم المستخدم
+    phone: string; // رقم الهاتف
+    password: string; // كلمة المرور (في تطبيق حقيقي يجب أن تكون مشفرة)
+    role: 'admin' | 'editor'; // الدور: مسؤول أو محرر
+    createdAt: string; // تاريخ الإنشاء
 }
 
+// تعريف واجهة حالة المتجر (Store State Interface)
 interface AdminState {
-    admins: AdminUser[];
-    addAdmin: (admin: Omit<AdminUser, 'id' | 'createdAt'>) => void;
-    updateAdmin: (id: string, updates: Partial<AdminUser>) => void;
-    removeAdmin: (id: string) => void;
-    getAdminByCredentials: (usernameOrPhone: string, password: string) => AdminUser | undefined;
+    admins: AdminUser[]; // قائمة المسؤولين
+    addAdmin: (admin: Omit<AdminUser, 'id' | 'createdAt'>) => void; // إضافة مسؤول جديد
+    updateAdmin: (id: string, updates: Partial<AdminUser>) => void; // تحديث بيانات مسؤول
+    removeAdmin: (id: string) => void; // حذف مسؤول
+    getAdminByCredentials: (usernameOrPhone: string, password: string) => AdminUser | undefined; // التحقق من بيانات الدخول
 }
 
 const initialAdmins: AdminUser[] = [
@@ -31,25 +33,31 @@ const initialAdmins: AdminUser[] = [
     }
 ];
 
+// إنشاء مخزن حالة المسؤولين باستخدام Zustand
 export const useAdminStore = create<AdminState>()(
+    // استخدام middleware 'persist' لحفظ البيانات في LocalStorage
     persist(
         (set, get) => ({
             admins: initialAdmins,
+            // دالة إضافة مسؤول جديد
             addAdmin: (admin) => set((state) => ({
                 admins: [...state.admins, {
                     ...admin,
-                    id: Math.random().toString(36).substr(2, 9),
+                    id: Math.random().toString(36).substr(2, 9), // توليد معرف عشوائي بسيط
                     createdAt: new Date().toISOString()
                 }]
             })),
+            // دالة تحديث بيانات مسؤول
             updateAdmin: (id, updates) => set((state) => ({
                 admins: state.admins.map((admin) =>
                     admin.id === id ? { ...admin, ...updates } : admin
                 )
             })),
+            // دالة حذف مسؤول
             removeAdmin: (id) => set((state) => ({
                 admins: state.admins.filter((admin) => admin.id !== id)
             })),
+            // دالة البحث عن مسئول للمصادقة
             getAdminByCredentials: (usernameOrPhone, password) => {
                 const state = get();
                 return state.admins.find(
@@ -60,7 +68,7 @@ export const useAdminStore = create<AdminState>()(
             }
         }),
         {
-            name: 'admin-storage',
+            name: 'admin-storage', // اسم المفتاح في LocalStorage
         }
     )
 );

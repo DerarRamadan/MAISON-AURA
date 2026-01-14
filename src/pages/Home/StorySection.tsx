@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import storyBg from '../../assets/images/story-bg.webp';
 import { useTranslation } from 'react-i18next';
 
+// قسم "قصتنا" أو "About Us" في الصفحة الرئيسية
 export default function StorySection() {
     const { t } = useTranslation();
 

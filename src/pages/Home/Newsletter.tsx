@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
+// قسم القائمة البريدية (Newsletter)
 export default function Newsletter() {
     const { t } = useTranslation();
 

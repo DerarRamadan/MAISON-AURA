@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
+// قسم الآراء (Reviews)
+// يعرض شريط متحرك (Marquee) يحتوي على آراء العملاء أو شعارات
 export default function Reviews() {
     const { t } = useTranslation();
 

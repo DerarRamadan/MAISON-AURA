@@ -2,6 +2,8 @@ import { Play } from 'lucide-react';
 import promoBg from '../../assets/images/promo-bg.webp';
 import { useTranslation } from 'react-i18next';
 
+// قسم الفيديو الترويجي
+// يعرض فيديو (أو صورة خلفية حاليًا) مع زر تشغيل
 export default function PromoVideo() {
     const { t } = useTranslation();
 

@@ -5,13 +5,14 @@ import { ShoppingBag, Star, Truck, ShieldCheck, ArrowRight } from 'lucide-react'
 import ProductCard from '../../components/product/ProductCard';
 import { useTranslation } from 'react-i18next';
 
+// صفحة تفاصيل المنتج
 export default function ProductDetailsPage() {
     const { id } = useParams();
     const navigate = useNavigate();
     const { addToCart } = useCart();
     const { t } = useTranslation();
 
-    // Convert id to number since params are strings
+    // تحويل id من نص إلى رقم
     const productId = Number(id);
     const product = products.find(p => p.id === productId);
 
@@ -24,25 +25,26 @@ export default function ProductDetailsPage() {
         );
     }
 
+    // عرض منتجات مشابهة من نفس الفئة
     const relatedProducts = products
         .filter(p => p.category === product.category && p.id !== product.id)
         .slice(0, 3);
 
     return (
         <div className="pt-32 pb-16 px-6 md:px-12 container mx-auto">
-            {/* Breadcrumb / Back */}
+            {/* زر الرجوع (Back Button) */}
             <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-gray-500 hover:text-gold mb-8 transition-colors">
                 <ArrowRight className="w-4 h-4" />
                 <span>{t('product.back')}</span>
             </button>
 
             <div className="flex flex-col md:flex-row gap-12 mb-24">
-                {/* Image */}
+                {/* صورة المنتج (Product Image) */}
                 <div className="w-full md:w-1/2 aspect-square bg-gray-50 rounded-lg overflow-hidden group">
                     <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 </div>
 
-                {/* Details */}
+                {/* تفاصيل المنتج (Product Details) */}
                 <div className="w-full md:w-1/2 flex flex-col justify-center">
                     <h2 className="text-sm font-bold text-gold tracking-widest uppercase mb-2">{product.brand}</h2>
                     <h1 className="text-4xl md:text-5xl font-serif font-bold mb-6 text-gray-900">{product.name}</h1>
@@ -83,7 +85,7 @@ export default function ProductDetailsPage() {
                 </div>
             </div>
 
-            {/* Related */}
+            {/* منتجات مشابهة (Related Products) */}
             {relatedProducts.length > 0 && (
                 <div className="border-t border-gray-100 pt-16">
                     <h2 className="text-3xl font-serif font-bold mb-12 text-center">{t('product.you_might_like')}</h2>
