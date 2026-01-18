@@ -1,73 +1,79 @@
-# React + TypeScript + Vite
+# متجر مايسون أورا للعطور الفاخرة (Maison Aura) 🏺✨
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+مشروع متكامل لمتجر إلكتروني متخصص في العطور الفاخرة، مبني باستخدام أحدث تقنيات الويب (React 19) لتقديم تجربة مستخدم سلسة وفخمة.
 
-Currently, two official plugins are available:
+## 🚀 التقنيات المستخدمة (Tech Stack)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+تم اختيار هذه التقنيات لضمان الأداء العالي وسهولة الصيانة:
 
-## React Compiler
+*   **React 19**: المكتبة الأساسية لبناء واجهة المستخدم.
+*   **Vite**: أداة بناء سريعة جداً للمشاريع الحديثة.
+*   **Tailwind CSS (v4)**: لتنسيق الموقع بشكل عصري ومرن.
+*   **TypeScript**: لضمان كتابة كود خالي من الأخطاء النوعية وسهولة التطوير.
+*   **Framer Motion**: لإضافة تأثيرات بصرية وحركات انسيابية فاخرة.
+*   **Lucide React**: حزمة أيقونات بسيطة وجميلة.
+*   **Zustand**: لإدارة الحالة (State Management) بشكل بسيط وفعال.
+*   **i18next**: لدعم تعدد اللغات (العربية وجارٍ العمل على الإنجليزية).
+*   **React Router 7**: لإدارة التنقل بين صفحات الموقع.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 📁 هيكل المشروع (Project Structure)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+luxury-perfume-react/
+├── src/
+│   ├── components/      # المكونات القابلة لإعادة الاستخدام (الأزرار، الهيدر، الفوتر)
+│   ├── context/         # سياق البيانات المشتركة (مثل سلة التسوق)
+│   ├── data/            # البيانات الثابتة (قائمة المنتجات)
+│   ├── hooks/           # الخطافات المخصصة (Custom Hooks)
+│   ├── locales/         # ملفات الترجمة (ar.json, en.json)
+│   ├── pages/           # صفحات الموقع الرئيسية (الرئيسية، المتجر، التفاصيل)
+│   ├── store/           # إدارة الحالة باستخدام Zustand
+│   ├── App.tsx          # المكون الأساسي الذي يجمع الصفحات
+│   └── main.tsx         # نقطة انطلاق التطبيق
+├── public/              # الصور والملفات الثابتة
+├── tailwind.config.js   # إعدادات تنسيق Tailwind
+├── vite.config.ts       # إعدادات أداة البناء Vite
+└── package.json         # الاعتمادات والأوامر البرمجية
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🔗 علاقة الملفات ببعضها
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1.  **index.html**: هو الملف الوحيد الذي يراه المتصفح في البداية، ويحتوي على وسوم البدء.
+2.  **main.tsx**: يقوم "بزرع" تطبيق React داخل ملف `index.html` في العنصر الذي يحمل `id="root"`.
+3.  **App.tsx**: هو الحاوية الكبرى؛ هنا نضع الـ Router الذي يحدد أي صفحة تظهر بناءً على الرابط.
+4.  **tailwind.config.js**: يتحكم في هوية الموقع البصرية (الألوان والخطوط والأبعاد).
+
+---
+
+## 🛠️ كيف تبدأ (How to run)
+
+اتبع هذه الخطوات لتشغيل المشروع على جهازك:
+
+1.  **تثبيت المكتبات**:
+    ```bash
+    npm install
+    ```
+
+2.  **تشغيل المشروع للتطوير**:
+    ```bash
+    npm run dev
+    ```
+
+3.  **بناء المشروع للنشر**:
+    ```bash
+    npm run build
+    ```
+
+---
+
+## 🌐 النشر
+
+المشروع مهيأ للنشر التلقائي على منصة **Netlify** باستخدام ملف `netlify.toml` الذي يدعم تطبيقات الصفحة الواحدة (SPA).
+
+---
+
+تم تطوير هذا المشروع ليكون نموذجاً تعليمياً واحترافياً لطلاب "أساس" في مجال تطوير الويب. 💡

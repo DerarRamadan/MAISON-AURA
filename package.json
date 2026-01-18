@@ -1,5 +1,6 @@
 {
   "name": "luxury-perfume-react",
+  "description_ar": "مشروع متجر عطور فاخرة مبني باستخدام React 19 و Vite",
   "private": true,
   "version": "0.0.0",
   "type": "module",

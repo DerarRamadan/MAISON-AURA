@@ -1,18 +1,18 @@
-# Logs
+# ملفات السجلات (Logs)
 logs
 *.log
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# مجلد الاعتمادات والمخرجات (Dependencies & Build)
 node_modules
 dist
 dist-ssr
 *.local
 
-# Editor directories and files
+# ملفات المحرر والنظام (Editor & OS files)
 .vscode/*
 !.vscode/extensions.json
 .idea
